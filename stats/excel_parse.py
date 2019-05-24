@@ -10,11 +10,11 @@ from openpyxl.utils import get_column_letter
 #Собрать имена всех ноков и номер строки, в котором она содержится
 def get_noc_names(sheet):
     names = {}
-    for cellObj in sheet['A5':'A40']:
+    for cellObj in sheet['A5':'A39']:
         for cell in cellObj:
             if cell.value is None:
                 continue
-            elif 'Команда' in cell.value:
+            elif 'Team' in cell.value:
                 continue
             else: names[cell.value] = cell.coordinate
     return names
@@ -22,12 +22,17 @@ def get_noc_names(sheet):
 #Получаем номер строки с первой функции
 def get_noc_row(noc_name, sheet):
     names = get_noc_names(sheet)
-    row = names[noc_name]
+    try:
+        row = names[noc_name]
+    except:
+        row = False
     return row
 
 #Собираем список словарей с сменой и цветом ячейки
 def get_shifts(noc_name, start, end, sheet):
     row = get_noc_row(noc_name, sheet)
+    if not row:
+        break
     shifts = []
     noc_start = start + row[1:]
     noc_end = end + row[1:]
