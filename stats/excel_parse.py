@@ -32,7 +32,7 @@ def get_noc_row(noc_name, sheet):
 def get_shifts(noc_name, start, end, sheet):
     row = get_noc_row(noc_name, sheet)
     if not row:
-        break
+        return 0
     shifts = []
     noc_start = start + row[1:]
     noc_end = end + row[1:]
