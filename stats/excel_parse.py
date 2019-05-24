@@ -32,7 +32,8 @@ def get_noc_row(noc_name, sheet):
 def get_shifts(noc_name, start, end, sheet):
     row = get_noc_row(noc_name, sheet)
     if not row:
-        return 0
+        return None
+
     shifts = []
     noc_start = start + row[1:]
     noc_end = end + row[1:]
@@ -53,6 +54,8 @@ def get_stats(noc_name, start, end, sheet):
     night_shifts = 0
     vacations = 0
     noc_hours = 0
+    if not shifts:
+        return total_hours, day_shifts, night_shifts, noc_hours
     for things in shifts:
         shift = things['data']['shift']
         color = things['data']['color']
